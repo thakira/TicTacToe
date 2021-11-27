@@ -1,3 +1,6 @@
+"""Konstanten für TicTacToe"""
+from typing import Tuple
+
 import pygame as pg
 
 NAME_PLAYER_1 = "Spieler 1"

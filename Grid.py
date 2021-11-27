@@ -1,4 +1,4 @@
-# Kästchenmuster für Spielbrett erstellen
+"""Kästchenmuster (Grid) für Spielbrett"""
 import pygame as pg
 from Settings import BOARD_SIZE, CELL_SIZE, GRID_DIMENSION, WHITE, BLACK
 
@@ -6,6 +6,7 @@ from Settings import BOARD_SIZE, CELL_SIZE, GRID_DIMENSION, WHITE, BLACK
 class Grid:
 
     def __init__(self):
+        """Konstruktor"""
         self.grid_size = BOARD_SIZE
         self.dimension = GRID_DIMENSION
         self.cell_size = int(CELL_SIZE)
@@ -28,13 +29,17 @@ class Grid:
                           [[x, 0], [x, self.grid_size]], 1)
 
     def get_grid_surface(self):
+        """Getter Grid Surface"""
         return self.surface
 
     def get_cells_array(self):
+        """Getter Zellen-Liste"""
         return self.cells
 
-    # Column und Row aus den übergebenen Bildschirmkoordinaten ermitteln
+
     def get_grid_coords(self, pos):
+        """Errechnen von Zeile & Spalte sowie Kästchenmittelpunkt
+        aus übergebenen Mauskoordinaten"""
         column = pos[0] // self.cell_size
         row = pos[1] // self.cell_size
         coords = (row, column)
