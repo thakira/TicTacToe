@@ -10,7 +10,6 @@ fps = 30
 CLOCK = pg.time.Clock()
 global winner, draw
 
-
 actual_player = ""
 screen = pg.display.set_mode((BOARD_SIZE, BOARD_HEIGHT))
 
@@ -26,23 +25,24 @@ def initialize_board():
     cells_array = Grid.get_cells_array(grid)
     screen.blit(Grid.get_grid_surface(grid), (0, 0))
     schrift = pg.font.Font(None, 30)
-    text = schrift.render(START_PLAYER + " ist dran!", True, (WHITE))
+    text = schrift.render(START_PLAYER + " ist dran!", True, WHITE)
     screen.fill(BLACK, (0, BOARD_SIZE, BOARD_SIZE + CELL_SIZE, CELL_SIZE))
-    text_rect = text.get_rect(center=(BOARD_SIZE / 2, BOARD_SIZE + CELL_SIZE - CELL_SIZE/2))
+    text_rect = text.get_rect(center=(BOARD_SIZE / 2, BOARD_SIZE + CELL_SIZE - CELL_SIZE / 2))
     screen.blit(text, text_rect)
     pg.display.flip()
+
 
 def evaluate_turn():
     global winner, draw
     # 3 Zeilen gleiches Symbol?
     for row in range(0, 3):
-        if (cells_array[row][0] == cells_array[row][1] == cells_array[row][2] and cells_array[row][0] is not None):
+        if cells_array[row][0] == cells_array[row][1] == cells_array[row][2] and cells_array[row][0] is not None:
             # print(str(zeile) + " voll: " + str(cells_array[zeile[0]]))
             winner = cells_array[row][0]
             print(winner)
             pg.draw.line(screen, (250, 0, 0),
-                         (0, (row + 1) * CELL_SIZE - CELL_SIZE/2),
-                         (BOARD_SIZE, (row + 1) * CELL_SIZE - CELL_SIZE/2),
+                         (0, (row + 1) * CELL_SIZE - CELL_SIZE / 2),
+                         (BOARD_SIZE, (row + 1) * CELL_SIZE - CELL_SIZE / 2),
                          4)
             break
     # 3 Spalten gleiches Symbol?
@@ -51,24 +51,23 @@ def evaluate_turn():
                 and (cells_array[0][column] is not None)):
             print(cells_array[0][column])
             winner = cells_array[0][column]
-            pg.draw.line(screen, (RED), ((column + 1) * CELL_SIZE - CELL_SIZE/2, 0), ((column + 1)
-                                    * CELL_SIZE - CELL_SIZE/2, BOARD_SIZE), 4)
+            pg.draw.line(screen, RED, ((column + 1) * CELL_SIZE - CELL_SIZE / 2, 0), ((column + 1)
+                                                                                      * CELL_SIZE - CELL_SIZE / 2,
+                                                                                      BOARD_SIZE), 4)
             break
     # 3x gleiches Symbol diagonal?
-    if (cells_array[0][0] == cells_array[1][1] == cells_array[2][2] and (cells_array[0][0] is not None)):
+    if cells_array[0][0] == cells_array[1][1] == cells_array[2][2] and (cells_array[0][0] is not None):
         # diagonal links nach rechts
         winner = cells_array[0][0]
         pg.draw.line(screen, (250, 70, 70), (50, 50), (350, 350), 4)
-    if (cells_array[0][2] == cells_array[1][1] == cells_array[2][0] and (cells_array[0][2] is not None)):
+    if cells_array[0][2] == cells_array[1][1] == cells_array[2][0] and (cells_array[0][2] is not None):
         # diagonal rechts nach links
         winner = cells_array[0][2]
         pg.draw.line(screen, (250, 70, 70), (350, 50), (50, 350), 4)
     # Alle Felder voll, aber kein Gewinner? Unentschieden
-    if (all([all(zeile) for zeile in cells_array]) and winner is None):
+    if all([all(zeile) for zeile in cells_array]) and winner is None:
         draw = True
     set_message()
-
-
 
 
 def evaluate_click():
@@ -87,7 +86,7 @@ def evaluate_click():
     cells_array[row_clicked][column_clicked] = actual_player
     print(cells_array[row_clicked][column_clicked])
     print(actual_player + ", " + NAME_PLAYER_1)
-    if (actual_player == NAME_PLAYER_1):
+    if actual_player == NAME_PLAYER_1:
         print("actual: " + actual_player + "player1: " + NAME_PLAYER_1)
         screen.blit(SYMBOL_PLAYER_1, (symbol_x_pos, symbol_y_pos))
         actual_player = NAME_PLAYER_2
@@ -111,9 +110,9 @@ def set_message():
     # Schriftobjekt erstellen
     schrift = pg.font.Font(None, 30)
     # Schriftfarbe = (255,255,255)
-    text = schrift.render(message, True, ((WHITE)))
+    text = schrift.render(message, True, WHITE)
     # Statusmeldung einblenden
-    screen.fill((BLACK), (0, BOARD_SIZE, BOARD_HEIGHT, 100))
+    screen.fill(BLACK, (0, BOARD_SIZE, BOARD_HEIGHT, 100))
     text_rect = text.get_rect(center=(400 / 2, 500 - 50))
     screen.blit(text, text_rect)
     pg.display.update()
@@ -124,15 +123,16 @@ def reset_game():
     initialize_board()
     set_message()
 
+
 initialize_board()
-while (True):
+while True:
     for event in pg.event.get():
         if event.type == QUIT:
             pg.quit()
             sys.exit()
         elif event.type == pg.MOUSEBUTTONDOWN:
             evaluate_click()
-        if (winner or draw):
+        if winner or draw:
             print("reset aufrufen")
             reset_game()
     pg.display.update()
