@@ -11,7 +11,6 @@ class Grid:
         self.dimension = GRID_DIMENSION
         self.cell_size = int(CELL_SIZE)
         self.surface = pg.Surface((self.grid_size, self.grid_size))
-        # self.surface.set_alpha(150)
         self.surface.fill(WHITE)
 
         # Liste für Zelleninhalte erstellen

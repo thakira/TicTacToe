@@ -4,14 +4,14 @@ import time
 import pygame as pg
 from pygame.locals import QUIT
 from Grid import Grid
-import Settings
+from Settings import *
 
 pg.init()
 FPS = 30
 CLOCK = pg.time.Clock()
 
 actual_player = ""
-screen = pg.display.set_mode((Settings.BOARD_SIZE, Settings.BOARD_HEIGHT))
+screen = pg.display.set_mode((BOARD_SIZE, BOARD_HEIGHT))
 winner = ""
 draw = False
 
@@ -20,43 +20,57 @@ def initialize_board():
     """Spielbrett initialisieren"""
     global winner, draw, grid, cells_array, actual_player
     pg.display.set_caption("Tic Tac Toe")
-    screen.fill(Settings.BLACK)
+    screen.fill(BLACK)
     winner = None
     draw = False
-    actual_player = Settings.START_PLAYER
+    actual_player = START_PLAYER
     grid = Grid()
     cells_array = Grid.get_cells_array(grid)
     screen.blit(Grid.get_grid_surface(grid), (0, 0))
     schrift = pg.font.Font(None, 30)
-    text = schrift.render(Settings.START_PLAYER + " ist dran!", True, Settings.WHITE)
-    screen.fill(Settings.BLACK, (0, Settings.BOARD_SIZE, Settings.BOARD_SIZE + Settings.CELL_SIZE, Settings.CELL_SIZE))
-    text_rect = text.get_rect(center=(Settings.BOARD_SIZE / 2, Settings.BOARD_SIZE + Settings.CELL_SIZE
-                                      - Settings.CELL_SIZE / 2))
+    text = schrift.render(START_PLAYER + " ist dran!", True, WHITE)
+    screen.fill(BLACK, (0, BOARD_SIZE, BOARD_SIZE + CELL_SIZE, CELL_SIZE))
+    text_rect = text.get_rect(center=(BOARD_SIZE / 2, BOARD_SIZE + CELL_SIZE
+                                      - CELL_SIZE / 2))
     screen.blit(text, text_rect)
     pg.display.flip()
 
 
 def evaluate_turn():
-    """abgeschlossenen Zug auf Gewinn oder Unentschieden auswerten"""
-    global winner, draw
-    # 3 gleiche Symbole in Zeile?
+    """abgeschlossenen Zug Spielende überprüfen"""
+    check_vertical()
+    check_horizontal()
+    check_diagonal()
+    check_if_draw()
+    set_message()
+
+
+def check_vertical():
+    """3 gleiche Symbole in Zeile?"""
+    global winner
     for row in range(0, 3):
         if cells_array[row][0] == cells_array[row][1] == cells_array[row][2] and cells_array[row][0] is not None:
             winner = cells_array[row][0]
             pg.draw.line(screen, (250, 0, 0),
-                         (0, (row + 1) * Settings.CELL_SIZE - Settings.CELL_SIZE / 2),
-                         (Settings.BOARD_SIZE, (row + 1) * Settings.CELL_SIZE - Settings.CELL_SIZE / 2),
+                         (0, (row + 1) * CELL_SIZE - CELL_SIZE / 2),
+                         (BOARD_SIZE, (row + 1) * CELL_SIZE - CELL_SIZE / 2),
                          4)
-            break
-    # 3 x gleiches Symbol in einer Spalte?
+
+
+def check_horizontal():
+    """3 x gleiches Symbol in einer Spalte?"""
+    global winner
     for column in range(0, 3):
         if (cells_array[0][column] == cells_array[1][column] == cells_array[2][column]
                 and (cells_array[0][column] is not None)):
             winner = cells_array[0][column]
-            pg.draw.line(screen, RED, ((column + 1) * Settings.CELL_SIZE - Settings.CELL_SIZE / 2, 0),
-                         ((column + 1) * Settings.CELL_SIZE - Settings.CELL_SIZE / 2, Settings.BOARD_SIZE), 4)
-            break
-    # 3x gleiches Symbol diagonal?
+            pg.draw.line(screen, RED, ((column + 1) * CELL_SIZE - CELL_SIZE / 2, 0),
+                         ((column + 1) * CELL_SIZE - CELL_SIZE / 2, BOARD_SIZE), 4)
+
+
+def check_diagonal():
+    """ 3x gleiches Symbol diagonal?"""
+    global winner
     if cells_array[0][0] == cells_array[1][1] == cells_array[2][2] and (cells_array[0][0] is not None):
         # diagonal links nach rechts
         winner = cells_array[0][0]
@@ -65,10 +79,13 @@ def evaluate_turn():
         # diagonal rechts nach links
         winner = cells_array[0][2]
         pg.draw.line(screen, (250, 70, 70), (350, 50), (50, 350), 4)
-    # Alle Felder voll, aber kein Gewinner? Unentschieden
+
+
+def check_if_draw():
+    """ Alle Felder voll, aber kein Gewinner? Unentschieden"""
+    global draw
     if all([all(zeile) for zeile in cells_array]) and winner is None:
         draw = True
-    set_message()
 
 
 def evaluate_click():
@@ -81,12 +98,12 @@ def evaluate_click():
     symbol_x_pos = click_pos[1][0] + spacing
     symbol_y_pos = click_pos[1][1] + spacing
     cells_array[row_clicked][column_clicked] = actual_player
-    if actual_player == Settings.NAME_PLAYER_1:
-        screen.blit(Settings.SYMBOL_PLAYER_1, (symbol_x_pos, symbol_y_pos))
-        actual_player = Settings.NAME_PLAYER_2
+    if actual_player == NAME_PLAYER_1:
+        screen.blit(SYMBOL_PLAYER_1, (symbol_x_pos, symbol_y_pos))
+        actual_player = NAME_PLAYER_2
     else:
-        screen.blit(Settings.SYMBOL_PLAYER_2, (symbol_x_pos, symbol_y_pos))
-        actual_player = Settings.NAME_PLAYER_1
+        screen.blit(SYMBOL_PLAYER_2, (symbol_x_pos, symbol_y_pos))
+        actual_player = NAME_PLAYER_1
     pg.display.update()
     evaluate_turn()
 
@@ -101,9 +118,9 @@ def set_message():
     if draw:
         message = "Unentschieden !"
     schrift = pg.font.Font(None, 30)
-    text = schrift.render(message, True, Settings.WHITE)
+    text = schrift.render(message, True, WHITE)
     # Statusmeldung einblenden
-    screen.fill(Settings.BLACK, (0, Settings.BOARD_SIZE, Settings.BOARD_HEIGHT, 100))
+    screen.fill(BLACK, (0, BOARD_SIZE, BOARD_HEIGHT, 100))
     text_rect = text.get_rect(center=(400 / 2, 500 - 50))
     screen.blit(text, text_rect)
     pg.display.update()
@@ -117,8 +134,8 @@ def reset_game():
 
 
 initialize_board()
+"""Spielschleife"""
 while True:
-    """Spielschleife"""
     for event in pg.event.get():
         if event.type == QUIT:
             pg.quit()
