@@ -28,7 +28,7 @@ class Grid:
                           [[x, 0], [x, self.grid_size]], 1)
 
     def get_grid_surface(self):
-        """Getter Grid Surface"""
+        """Getter Grid Surface for board"""
         return self.surface
 
     def get_cells_array(self):
