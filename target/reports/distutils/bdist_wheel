@@ -1,0 +1,47 @@
+running clean
+'build\lib' does not exist -- can't clean it
+'build\bdist.win-amd64' does not exist -- can't clean it
+'build\scripts-3.8' does not exist -- can't clean it
+running bdist_wheel
+running build
+running build_py
+creating build
+creating build\lib
+copying Grid.py -> build\lib
+copying Settings.py -> build\lib
+copying TicTacToe.py -> build\lib
+copying helloworld.py -> build\lib
+installing to build\bdist.win-amd64\wheel
+running install
+running install_lib
+creating build\bdist.win-amd64
+creating build\bdist.win-amd64\wheel
+copying build\lib\Grid.py -> build\bdist.win-amd64\wheel\.
+copying build\lib\helloworld.py -> build\bdist.win-amd64\wheel\.
+copying build\lib\Settings.py -> build\bdist.win-amd64\wheel\.
+copying build\lib\TicTacToe.py -> build\bdist.win-amd64\wheel\.
+running install_egg_info
+running egg_info
+writing TicTacToe.egg-info\PKG-INFO
+writing dependency_links to TicTacToe.egg-info\dependency_links.txt
+writing namespace_packages to TicTacToe.egg-info\namespace_packages.txt
+writing top-level names to TicTacToe.egg-info\top_level.txt
+reading manifest file 'TicTacToe.egg-info\SOURCES.txt'
+writing manifest file 'TicTacToe.egg-info\SOURCES.txt'
+Copying TicTacToe.egg-info to build\bdist.win-amd64\wheel\.\TicTacToe-1.0.dev0-py3.8.egg-info
+running install_scripts
+creating build\bdist.win-amd64\wheel\TicTacToe-1.0.dev0.dist-info\WHEEL
+creating 'dist\TicTacToe-1.0.dev0-py3-none-any.whl' and adding 'build\bdist.win-amd64\wheel' to it
+adding 'Grid.py'
+adding 'Settings.py'
+adding 'TicTacToe.py'
+adding 'helloworld.py'
+adding 'TicTacToe-1.0.dev0.dist-info/METADATA'
+adding 'TicTacToe-1.0.dev0.dist-info/WHEEL'
+adding 'TicTacToe-1.0.dev0.dist-info/namespace_packages.txt'
+adding 'TicTacToe-1.0.dev0.dist-info/top_level.txt'
+adding 'TicTacToe-1.0.dev0.dist-info/zip-safe'
+adding 'TicTacToe-1.0.dev0.dist-info/RECORD'
+removing build\bdist.win-amd64\wheel
+c:\users\veren\tictactoe\.pybuilder\plugins\cpython-3.8.5.final.0\lib\site-packages\setuptools\command\install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
