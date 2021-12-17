@@ -1,10 +1,11 @@
 """TicTacToe-Spiel zur Bearbeitung der Aufgaben im Modul SWE im WS 21/22"""
 import sys
-import time
 import pygame as pg
+import time
 from pygame.locals import QUIT
 from Grid import Grid
-from Settings import *
+from Settings import NAME_PLAYER_1, NAME_PLAYER_2, START_PLAYER, BOARD_SIZE, CELL_SIZE, BOARD_HEIGHT
+from Settings import SYMBOL_PLAYER_1, SYMBOL_PLAYER_2, WHITE, BLACK, RED
 
 pg.init()
 FPS = 30

@@ -35,7 +35,6 @@ class Grid:
         """Getter Zellen-Liste"""
         return self.cells
 
-
     def get_grid_coords(self, pos):
         """Errechnen von Zeile & Spalte sowie Kästchenmittelpunkt
         aus übergebenen Mauskoordinaten"""
